@@ -17,7 +17,13 @@ export class PagesService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  //  Create method is used to create a new page
+  /**
+   * Create method is used to create a new page.
+   * @param userId - The ID of the user.
+   * @param createPageDto - The DTO containing the page data.
+   * @returns A Promise that resolves to the created page.
+   * @throws BadRequestException if the user is not found.
+   */
   async create(userId: string, createPageDto: CreatePageDto): Promise<Page> {
     // Find user by userId
     const user = await this.userRepository.findOneBy({ id: userId });
@@ -35,12 +41,20 @@ export class PagesService {
     return createdPage;
   }
 
-  // FindAll method is used to find all pages
+  /**
+   * FindAll method is used to find all pages.
+   * @returns A Promise that resolves to an array of pages.
+   */
   async findAll(): Promise<Page[]> {
     return this.pageRepository.find({});
   }
 
-  // FindOne method is used to find a page by id
+  /**
+   * FindOne method is used to find a page by id.
+   * @param id - The ID of the page.
+   * @returns A Promise that resolves to the found page.
+   * @throws BadRequestException if the page is not found.
+   */
   async findOne(id: string): Promise<Page> {
     const page = await this.pageRepository.findOne({
       where: {
@@ -64,7 +78,14 @@ export class PagesService {
     return page;
   }
 
-  // Update method is used to update a page by id
+  /**
+   * Update method is used to update a page by id.
+   * @param userId - The ID of the user.
+   * @param id - The ID of the page.
+   * @param updatePageDto - The DTO containing the updated page data.
+   * @returns A Promise that resolves to the updated page.
+   * @throws BadRequestException if the page is not found.
+   */
   async update(
     userId: string,
     id: string,
@@ -91,7 +112,13 @@ export class PagesService {
     return updatedPage;
   }
 
-  // Remove method is used to remove a page by id
+  /**
+   * Remove method is used to remove a page by id.
+   * @param userId - The ID of the user.
+   * @param id - The ID of the page.
+   * @returns A Promise that resolves to the deleted page.
+   * @throws BadRequestException if the page is not found.
+   */
   async remove(userId: string, id: string): Promise<Page> {
     // Find page by id
     const page = await this.pageRepository.findOne({

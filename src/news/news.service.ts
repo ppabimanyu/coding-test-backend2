@@ -26,7 +26,13 @@ export class NewsService {
     private readonly commentRepository: Repository<Comment>,
   ) {}
 
-  // CreateNews method is used to create a new news
+  /**
+   * Creates a new news article.
+   * @param userId - The ID of the author.
+   * @param req - The request object containing the news details.
+   * @returns The newly created news article.
+   * @throws BadRequestException if the author or category is not found.
+   */
   async createNews(userId: string, req: CreateNewsDto) {
     // find author by userId
     const author = await this.userRepository.findOneBy({ id: userId });
@@ -52,7 +58,13 @@ export class NewsService {
     return createdNews;
   }
 
-  // CreateComment method is used to create a new comment
+  /**
+   * Creates a new comment for a news article.
+   * @param newsId - The ID of the news article.
+   * @param req - The request object containing the comment details.
+   * @returns A Promise that resolves to the created comment.
+   * @throws BadRequestException if the news article is not found.
+   */
   async createComment(newsId: string, req: CreateCommentDto): Promise<Comment> {
     // find news by newsId
     const news = await this.newsRepository.findOneBy({
@@ -71,12 +83,20 @@ export class NewsService {
     return createdComment;
   }
 
-  // FindAll method is used to find all news
+  /**
+   * Retrieves all news.
+   * @returns A promise that resolves to an array of News objects.
+   */
   async findAll(): Promise<News[]> {
     return this.newsRepository.find({});
   }
 
-  // FindOne method is used to find a news by id
+  /**
+   * Finds a news item by its ID.
+   * @param id - The ID of the news item to find.
+   * @returns A Promise that resolves to the found news item.
+   * @throws BadRequestException if the news item is not found.
+   */
   async findOne(id: string): Promise<News> {
     const news = await this.newsRepository.findOne({
       where: {
@@ -111,7 +131,14 @@ export class NewsService {
     return news;
   }
 
-  // Update method is used to update a news by id
+  /**
+   * Updates a news article.
+   * @param userId - The ID of the user performing the update.
+   * @param id - The ID of the news article to update.
+   * @param updateNewsDto - The data to update the news article with.
+   * @returns A Promise that resolves to the updated news article.
+   * @throws BadRequestException if the news article is not found.
+   */
   async update(
     userId: string,
     id: string,
@@ -138,7 +165,13 @@ export class NewsService {
     return updatedNews;
   }
 
-  // Remove method is used to remove a news by id
+  /**
+   * Removes a news item.
+   * @param userId - The ID of the user who is removing the news item.
+   * @param id - The ID of the news item to be removed.
+   * @returns A Promise that resolves to the deleted news item.
+   * @throws BadRequestException if the news item is not found.
+   */
   async remove(userId: string, id: string): Promise<News> {
     // Check if news exists
     const news = await this.newsRepository.findOne({

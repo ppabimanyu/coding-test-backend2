@@ -14,11 +14,19 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CurrentUser } from 'src/auth/decorators/current_user.decorator';
 
+/**
+ * Controller class for managing categories.
+ */
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  // Create method is controller used to create a new category
+  /**
+   * Create a new category.
+   * @param createCategoryDto - The DTO containing the category data.
+   * @param userId - The ID of the user creating the category.
+   * @returns The created category.
+   */
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(
@@ -39,7 +47,10 @@ export class CategoryController {
     };
   }
 
-  // FindAll method is controller used to find all categories
+  /**
+   * Get all categories.
+   * @returns All categories.
+   */
   @Get()
   async findAll() {
     const categories = await this.categoryService.findAll();
@@ -50,7 +61,11 @@ export class CategoryController {
     };
   }
 
-  // FindOne method is controller used to find a category by id
+  /**
+   * Get a category by ID.
+   * @param id - The ID of the category to retrieve.
+   * @returns The category with the specified ID.
+   */
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const category = await this.categoryService.findOne(id);
@@ -61,7 +76,13 @@ export class CategoryController {
     };
   }
 
-  // Update method is controller used to update a category by id
+  /**
+   * Update a category by ID.
+   * @param id - The ID of the category to update.
+   * @param updateCategoryDto - The DTO containing the updated category data.
+   * @param userId - The ID of the user updating the category.
+   * @returns The updated category.
+   */
   @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
@@ -84,7 +105,12 @@ export class CategoryController {
     };
   }
 
-  // Remove method is controller used to remove a category by id
+  /**
+   * Remove a category by ID.
+   * @param id - The ID of the category to remove.
+   * @param userId - The ID of the user removing the category.
+   * @returns The deleted category.
+   */
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string, @CurrentUser() userId: string) {

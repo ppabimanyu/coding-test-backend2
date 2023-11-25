@@ -11,6 +11,9 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 
+/**
+ * Service responsible for authentication-related operations.
+ */
 @Injectable()
 export class AuthService {
   constructor(
@@ -20,6 +23,13 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
+  /**
+   * Authenticates a user and generates a JWT token.
+   * @param req - The login request containing the username and password.
+   * @returns The JWT token.
+   * @throws NotFoundException if the user is not found.
+   * @throws BadRequestException if the credentials are invalid.
+   */
   async Login(req: LoginDto): Promise<string> {
     const user = await this.usersRepository.findOneBy({
       username: req.username,
@@ -44,6 +54,12 @@ export class AuthService {
     return token;
   }
 
+  /**
+   * Registers a new user.
+   * @param req - The registration request containing the username and password.
+   * @returns The created user.
+   * @throws BadRequestException if the user already exists.
+   */
   async Register(req: LoginDto): Promise<User> {
     const user = await this.usersRepository.findOneBy({
       username: req.username,

@@ -32,4 +32,8 @@ export class Category {
 
   @CreateDateColumn()
   updatedAt: Date;
+
+  constructor(partial: Partial<Category>) {
+    Object.assign(this, partial);
+  }
 }

@@ -16,11 +16,19 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CurrentUser } from 'src/auth/decorators/current_user.decorator';
 import { CreateCommentDto } from './dto/create-comment';
 
+/**
+ * Controller class for managing news-related operations.
+ */
 @Controller('news')
 export class NewsController {
   constructor(private readonly newsService: NewsService) {}
 
-  // CreateNews method is controller used to create a new news
+  /**
+   * Create a new news.
+   * @param createNewsDto - The DTO containing the data for creating a news.
+   * @param userId - The ID of the user creating the news.
+   * @returns An object containing the created news ID and creation timestamp.
+   */
   @UseGuards(JwtAuthGuard)
   @Post()
   async createNews(
@@ -41,7 +49,12 @@ export class NewsController {
     };
   }
 
-  // CreateComment method is controller used to create a new comment
+  /**
+   * Create a new comment for a news.
+   * @param newsId - The ID of the news to create the comment for.
+   * @param createCommentDto - The DTO containing the data for creating a comment.
+   * @returns An object containing the created comment ID and creation timestamp.
+   */
   @Post(':newsId/comments')
   async createComment(
     @Param('newsId') newsId: string,
@@ -61,7 +74,10 @@ export class NewsController {
     };
   }
 
-  // FindAll method is controller used to find all news
+  /**
+   * Get all news.
+   * @returns An object containing the fetched news.
+   */
   @Get()
   async findAll() {
     const news = await this.newsService.findAll();
@@ -72,7 +88,11 @@ export class NewsController {
     };
   }
 
-  // FindOne method is controller used to find a news by id
+  /**
+   * Get a news by ID.
+   * @param id - The ID of the news to fetch.
+   * @returns An object containing the fetched news.
+   */
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const news = await this.newsService.findOne(id);
@@ -83,7 +103,13 @@ export class NewsController {
     };
   }
 
-  // Update method is controller used to update a news by id
+  /**
+   * Update a news by ID.
+   * @param id - The ID of the news to update.
+   * @param updateNewsDto - The DTO containing the data for updating the news.
+   * @param userId - The ID of the user updating the news.
+   * @returns An object containing the updated news ID and update timestamp.
+   */
   @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
@@ -106,7 +132,12 @@ export class NewsController {
     };
   }
 
-  // Remove method is controller used to remove a news by id
+  /**
+   * Remove a news by ID.
+   * @param id - The ID of the news to remove.
+   * @param userId - The ID of the user removing the news.
+   * @returns An object containing the deleted news ID and deletion timestamp.
+   */
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string, @CurrentUser() userId: string) {

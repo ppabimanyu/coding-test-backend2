@@ -29,4 +29,8 @@ export class Page {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  constructor(partial: Partial<Page>) {
+    Object.assign(this, partial);
+  }
 }

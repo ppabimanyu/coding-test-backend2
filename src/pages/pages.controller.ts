@@ -14,11 +14,19 @@ import { UpdatePageDto } from './dto/update-page.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { CurrentUser } from 'src/auth/decorators/current_user.decorator';
 
+/**
+ * Controller for managing pages.
+ */
 @Controller('pages')
 export class PagesController {
   constructor(private readonly pagesService: PagesService) {}
 
-  // Create method is controller used to create a new page
+  /**
+   * Create a new page.
+   * @param createPageDto - The data for creating a page.
+   * @param userId - The ID of the user creating the page.
+   * @returns The created page.
+   */
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(
@@ -36,7 +44,10 @@ export class PagesController {
     };
   }
 
-  // FindAll method is controller used to find all pages
+  /**
+   * Get all pages.
+   * @returns All pages.
+   */
   @Get()
   async findAll() {
     const pages = await this.pagesService.findAll();
@@ -47,7 +58,11 @@ export class PagesController {
     };
   }
 
-  // FindOne method is controller used to find a page by id
+  /**
+   * Get a page by ID.
+   * @param id - The ID of the page.
+   * @returns The page with the specified ID.
+   */
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const page = await this.pagesService.findOne(id);
@@ -58,7 +73,13 @@ export class PagesController {
     };
   }
 
-  // Update method is controller used to update a page by id
+  /**
+   * Update a page by ID.
+   * @param id - The ID of the page.
+   * @param updatePageDto - The data for updating the page.
+   * @param userId - The ID of the user updating the page.
+   * @returns The updated page.
+   */
   @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
@@ -81,7 +102,12 @@ export class PagesController {
     };
   }
 
-  // Remove method is controller used to remove a page by id
+  /**
+   * Remove a page by ID.
+   * @param id - The ID of the page.
+   * @param userId - The ID of the user removing the page.
+   * @returns The deleted page.
+   */
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string, @CurrentUser() userId: string) {

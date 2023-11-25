@@ -6,6 +6,10 @@ import { User } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 
+/**
+ * JwtStrategy class that extends PassportStrategy.
+ * This strategy is used for validating JWT tokens.
+ */
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -20,6 +24,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  /**
+   * Validates the payload of the JWT token.
+   * @param payload - The payload of the JWT token.
+   * @returns An object containing the userId extracted from the payload.
+   */
   async validate(payload: any) {
     return {
       userId: payload.sub,

@@ -29,4 +29,8 @@ export class Comment {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  constructor(partial: Partial<Comment>) {
+    Object.assign(this, partial);
+  }
 }
